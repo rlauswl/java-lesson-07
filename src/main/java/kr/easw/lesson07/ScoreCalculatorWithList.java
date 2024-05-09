@@ -1,6 +1,8 @@
 package kr.easw.lesson07;
 
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * 이전 2개의 예제에서 소개된 List 컬렉션과 제너릭스를 이용해 평균 점수 계산기를 만들어보세요.
@@ -41,20 +43,30 @@ public class ScoreCalculatorWithList {
     }
 
     static class CalculatorImpl implements Calculator {
-
+        private List<Score> scoreList;
+        public CalculatorImpl() {
+            this.scoreList = new ArrayList<>();
+        }
         @Override
         public void addScore(String subject, int score) {
-            throw new RuntimeException("이곳에 코드를 작성하세요.");
+            scoreList.add(new Score(subject,score));
         }
 
         @Override
         public double getAverage() {
-            throw new RuntimeException("이곳에 코드를 작성하세요.");
+            if(scoreList.isEmpty()) {
+                throw new RuntimeException("점수를 입력하지 않았습니다");
+            }
+            int sum=0;
+            for(Score score : scoreList){
+                sum+=score.getScore();
+            }
+            return (double) sum/scoreList.size();
         }
 
         @Override
         public int getSubjectCount() {
-            throw new RuntimeException("이곳에 코드를 작성하세요.");
+            return scoreList.size();
         }
     }
 
